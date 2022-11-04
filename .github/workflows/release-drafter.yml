@@ -1,4 +1,4 @@
-name: Release npm package
+name: Semantic Release
 
 on:
   push:
@@ -7,12 +7,16 @@ on:
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
+    concurrency: release
+
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
-      - run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Python Semantic Release
+      uses: relekang/python-semantic-release@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository_username: __token__
