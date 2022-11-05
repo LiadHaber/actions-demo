@@ -1,0 +1,20 @@
+name: Bump version
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: upload image to ECR
+        uses: appleboy/docker-ecr-action@master
+        with:
+          access_key: AKIAWWV4MWNC7DS3HDRD
+          secret_key: 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
+          registry: 461030339397.dkr.ecr.us-east-2.amazonaws.com
+          repo: github-actions
+          region: us-east-2          
+          dockerfile: Dockerfile
+          tags: "dev-${{ github.sha }}"
