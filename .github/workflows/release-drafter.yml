@@ -9,9 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: repo name
-        run: |
-          echo ${{ github.event.repository.name }}
+      - name: Check out my other private repo
+        uses: actions/checkout@master
+        with:
+          repository: LiadHaber/dummy
+          token: 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
+        
+      - name: edit values
+        uses: mikefarah/yq@master
+        id: edit_var
+        with:
+          cmd: yq e '.image.tag = "v0.0.2"' -i values.yaml
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          cwd: './dummy'
+          message: "update values"
+          push: true
+      # - name: repo name
+      #   run: |
+      #     echo ${{ github.event.repository.name }}
       # - name: Bump version and push tag
       #   id: tag_version
       #   uses: mathieudutour/github-tag-action@v6.1
