@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: LiadHaber/dummy
-          token: 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
+          token: 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
         
       - name: edit values
         uses: mikefarah/yq@master
